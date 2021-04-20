@@ -6,6 +6,8 @@ class Price
     private $currency;
     private $country;
 
+    private $taxCalculator;
+
     public function __construct(float $price, string $currency, string $country)
     {
         if ($currency == '') {
@@ -15,6 +17,8 @@ class Price
         $this->price = $price;
         $this->currency = $currency;
         $this->country = $country;
+
+        $this->taxCalculator = new TaxCalculator($country);
     }
 
     public function print(): void
@@ -31,20 +35,7 @@ class Price
 
     private function calculateTax(): float
     {
-        switch ($this->country) {
-            case 'spain':
-                return $this->price * 0.21;
-                break;
-            case 'usa':
-                return $this->price * 0.15;
-                break;
-            case 'france':
-                return $this->price * 0.25;
-                break;
-            case 'germany':
-                return $this->price * 0.08;
-                break;
-        }
+        return $this->taxCalculator->execute($this->price);
     }
 
 }

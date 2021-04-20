@@ -5,10 +5,14 @@ class Wallet
     private $transactions;
     private $country;
 
+    private $taxCalculator;
+
     public function __construct($country)
     {
         $this->transactions = [];
         $this->country = $country;
+
+        $this->taxCalculator = new TaxCalculator($country);
     }
 
     public function addTransaction(Price $price)
@@ -29,20 +33,8 @@ class Wallet
     public function getCountryTaxForPermanency()
     {
         $total = $this->getTotalBalance();
-        switch ($this->country) {
-            case 'spain':
-                return $total * 0.21;
-                break;
-            case 'usa':
-                return $total * 0.15;
-                break;
-            case 'france':
-                return $total * 0.25;
-                break;
-            case 'germany':
-                return $total * 0.08;
-                break;
-        }
+        
+        return $this->taxCalculator->execute($total);
     }
 
 }
