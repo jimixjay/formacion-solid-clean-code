@@ -10,9 +10,7 @@ class Price
 
     public function __construct(float $price, string $currency, string $country)
     {
-        if ($currency == '') {
-            throw new Exception('Moneda incorrecta');
-        }
+        $this->assertCorrectCurrency($currency);
 
         $this->price = $price;
         $this->currency = $currency;
@@ -36,6 +34,14 @@ class Price
     private function calculateTax(): float
     {
         return $this->taxCalculator->execute($this->price);
+    }
+
+    private function assertCorrectCurrency(string $currency)
+    : void
+    {
+        if ($currency == '') {
+            throw new Exception('Moneda incorrecta');
+        }
     }
 
 }
