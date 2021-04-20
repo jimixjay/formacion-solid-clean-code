@@ -2,27 +2,27 @@
 
 class TaxCalculator
 {
-    private $country;
+    private $c;
 
     public function __construct($country)
     {
-        $this->country = $country;
+        $this->c = $country;
     }
 
-    public function execute($amount)
+    public function execute($x)
     {
-        switch ($this->country) {
+        switch ($this->c) {
             case 'spain':
-                return $amount * 0.21;
+                return $x * 0.21;
                 break;
             case 'usa':
-                return $amount * 0.15;
+                return $x * 0.15;
                 break;
             case 'france':
-                return $amount * 0.25;
+                return $x * 0.25;
                 break;
             case 'germany':
-                return $amount * 0.08;
+                return $x * 0.08;
                 break;
         }
     }

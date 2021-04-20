@@ -2,39 +2,39 @@
 
 class Wallet
 {
-    private $transactions;
-    private $country;
+    private $ts;
+    private $c;
 
-    private $taxCalculator;
+    private $tax;
 
     public function __construct($country)
     {
-        $this->transactions = [];
-        $this->country = $country;
+        $this->ts = [];
+        $this->c = $country;
 
-        $this->taxCalculator = new TaxCalculator($country);
+        $this->tax = new TaxCalculator($country);
     }
 
-    public function addTransaction(Price $price)
+    public function new(Price $price)
     {
-        $this->transactions[] = $price;
+        $this->ts[] = $price;
     }
 
-    public function getTotalBalance()
+    public function getTotal()
     {
-        $total = 0;
-        foreach ($this->transactions as $transaction) {
-            $total += $transaction->price();
+        $i = 0;
+        foreach ($this->ts as $t) {
+            $i += $t->price();
         }
 
-        return $total;
+        return $i;
     }
 
-    public function getCountryTaxForPermanency()
+    public function getTotalPermanency()
     {
-        $total = $this->getTotalBalance();
-        
-        return $this->taxCalculator->execute($total);
+        $total = $this->getTotal();
+
+        return $this->tax->execute($total);
     }
 
 }
