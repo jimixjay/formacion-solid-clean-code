@@ -8,10 +8,6 @@ class Price
 
     public function __construct(float $price, string $currency, string $country)
     {
-        if ($price < 0) {
-            throw new Exception('Precio negativo');
-        }
-
         if ($currency == '') {
             throw new Exception('Moneda incorrecta');
         }
@@ -26,6 +22,11 @@ class Price
         $tax = $this->calculateTax();
 
         echo ($this->price + $tax) . ' ' . $this->currency;
+    }
+
+    public function price(): float
+    {
+        return $this->price + $this->calculateTax();
     }
 
     private function calculateTax(): float
